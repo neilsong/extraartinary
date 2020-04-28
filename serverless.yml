@@ -1,0 +1,22 @@
+org: yourorg
+app: serverlessjams
+service: serverlessjams
+
+
+functions:
+  contactForm:
+    handler: backend/contactForm.handler
+    events:
+      - http:
+          path: post/contactform
+          method: post
+          cors: true
+
+plugins:
+  - serverless-finch
+
+custom:
+  client:
+    bucketName: extraartinary.com
+    distributionFolder: frontend
+    errorDocument: index.html
