@@ -2,6 +2,7 @@ org: songneilsong
 app: extraartinary
 service: website
 
+provider: aws
 
 functions:
   contactForm:

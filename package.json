@@ -1,8 +1,8 @@
 {
-    "name": "serverless-jams",
+    "name": "extraartinary",
     "description": "",
     "version": "0.1.0",
     "dependencies": {
-      "serverless-finch": "^2.5.2"
+        "serverless-finch": "^2.5.2"
     }
 }
