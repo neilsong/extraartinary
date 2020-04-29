@@ -77,7 +77,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "com.extraartinary.us-east-1.deploys",
-                "S3Key": "serverless/website/dev/1588200993977-2020-04-29T22:56:33.977Z/website.zip"
+                "S3Key": "serverless/website/dev/1588202233034-2020-04-29T23:17:13.034Z/website.zip"
               },
               "FunctionName": "website-dev-contactForm",
               "Handler": "s_contactForm.handler",
@@ -96,14 +96,14 @@
               "SESExecutionRole"
             ]
           },
-          "ContactFormLambdaVersion40ym4QhuU1EvDK6JCAg13t7kJUvf7smlOf5sjET67M": {
+          "ContactFormLambdaVersionMlPFrcb1s4cl15jibwEDL8lReZ032TlK2K32Udkw8I": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ContactFormLambdaFunction"
               },
-              "CodeSha256": "JzTuhFMEUMhpsxITvjQeOULA9BvQAI623Ib2BP2H1L0="
+              "CodeSha256": "G0lZX4sVIZFz4PPBiva+MB+ZgKZbmX3Hfg/Pd4gsSo4="
             }
           },
           "ApiGatewayRestApi": {
@@ -233,7 +233,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1588200989344": {
+          "ApiGatewayDeployment1588202228630": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -390,7 +390,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "com.extraartinary.us-east-1.deploys",
-                "S3Key": "serverless/website/dev/1588200993977-2020-04-29T22:56:33.977Z/custom-resources.zip"
+                "S3Key": "serverless/website/dev/1588202233034-2020-04-29T23:17:13.034Z/custom-resources.zip"
               },
               "FunctionName": "website-dev-custom-resource-apigw-cw-role",
               "Handler": "apiGatewayCloudWatchRole/handler.handler",
@@ -413,7 +413,7 @@
             "Properties": {
               "RoleName": "SESExecutionRole",
               "AssumeRolePolicyDocument": {
-                "Version": "2020-04-29",
+                "Version": "2012-10-17",
                 "Statement": [
                   {
                     "Effect": "Allow",
@@ -421,16 +421,16 @@
                       "Service": "lambda.amazonaws.com"
                     },
                     "Action": [
-                      "ses:SendEmail"
+                      "sts:AssumeRole"
                     ]
                   }
                 ]
               },
               "Policies": [
                 {
-                  "PolicyName": "defaultExecutionRole",
+                  "PolicyName": "SESExecutionRole",
                   "PolicyDocument": {
-                    "Version": "2020-04-29",
+                    "Version": "2012-10-17",
                     "Statement": [
                       {
                         "Effect": "Allow",
@@ -464,6 +464,13 @@
                           "ec2:DescribeNetworkInterfaces",
                           "ec2:DetachNetworkInterface",
                           "ec2:DeleteNetworkInterface"
+                        ],
+                        "Resource": "*"
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "ses:SendEmail"
                         ],
                         "Resource": "*"
                       }
@@ -509,7 +516,7 @@
           "ContactFormLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ContactFormLambdaVersion40ym4QhuU1EvDK6JCAg13t7kJUvf7smlOf5sjET67M"
+              "Ref": "ContactFormLambdaVersionMlPFrcb1s4cl15jibwEDL8lReZ032TlK2K32Udkw8I"
             }
           },
           "ServiceEndpoint": {
@@ -596,7 +603,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "ContactFormLambdaVersion40ym4QhuU1EvDK6JCAg13t7kJUvf7smlOf5sjET67M"
+        "versionLogicalId": "ContactFormLambdaVersionMlPFrcb1s4cl15jibwEDL8lReZ032TlK2K32Udkw8I"
       }
     },
     "resources": {
@@ -606,7 +613,7 @@
           "Properties": {
             "RoleName": "SESExecutionRole",
             "AssumeRolePolicyDocument": {
-              "Version": "2020-04-29",
+              "Version": "2012-10-17",
               "Statement": [
                 {
                   "Effect": "Allow",
@@ -614,16 +621,16 @@
                     "Service": "lambda.amazonaws.com"
                   },
                   "Action": [
-                    "ses:SendEmail"
+                    "sts:AssumeRole"
                   ]
                 }
               ]
             },
             "Policies": [
               {
-                "PolicyName": "defaultExecutionRole",
+                "PolicyName": "SESExecutionRole",
                 "PolicyDocument": {
-                  "Version": "2020-04-29",
+                  "Version": "2012-10-17",
                   "Statement": [
                     {
                       "Effect": "Allow",
@@ -659,6 +666,13 @@
                         "ec2:DeleteNetworkInterface"
                       ],
                       "Resource": "*"
+                    },
+                    {
+                      "Effect": "Allow",
+                      "Action": [
+                        "ses:SendEmail"
+                      ],
+                      "Resource": "*"
                     }
                   ]
                 }
@@ -680,7 +694,7 @@
     "artifact": "/Users/neilsong/Development/extraartinary/.serverless/website.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/website/dev/1588200993977-2020-04-29T22:56:33.977Z",
+    "artifactDirectoryName": "serverless/website/dev/1588202233034-2020-04-29T23:17:13.034Z",
     "artifact": "website.zip"
   }
 }

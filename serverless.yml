@@ -31,10 +31,9 @@ resources:
               Principal:
                 Service: lambda.amazonaws.com
               Action: 
-                - ses:SendEmail
-
+                - sts:AssumeRole
         Policies:
-         - PolicyName: defaultExecutionRole
+         - PolicyName: SESExecutionRole
            PolicyDocument:
              Version: '2012-10-17'
              Statement:
@@ -57,6 +56,10 @@ resources:
                    - ec2:DescribeNetworkInterfaces
                    - ec2:DetachNetworkInterface
                    - ec2:DeleteNetworkInterface
+                 Resource: "*"
+               - Effect: "Allow"
+                 Action:
+                   - ses:SendEmail
                  Resource: "*"
 
 plugins:
