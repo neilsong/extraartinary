@@ -1,6 +1,6 @@
-org: yourorg
-app: serverlessjams
-service: serverlessjams
+org: songneilsong
+app: extraartinary
+service: website
 
 
 functions:
