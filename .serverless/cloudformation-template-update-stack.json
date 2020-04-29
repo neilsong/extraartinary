@@ -2,139 +2,10 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "The AWS CloudFormation template for this Serverless application",
   "Resources": {
-    "ServerlessDeploymentBucket": {
-      "Type": "AWS::S3::Bucket",
-      "Properties": {
-        "BucketEncryption": {
-          "ServerSideEncryptionConfiguration": [
-            {
-              "ServerSideEncryptionByDefault": {
-                "SSEAlgorithm": "AES256"
-              }
-            }
-          ]
-        }
-      }
-    },
-    "ServerlessDeploymentBucketPolicy": {
-      "Type": "AWS::S3::BucketPolicy",
-      "Properties": {
-        "Bucket": {
-          "Ref": "ServerlessDeploymentBucket"
-        },
-        "PolicyDocument": {
-          "Statement": [
-            {
-              "Action": "s3:*",
-              "Effect": "Deny",
-              "Principal": "*",
-              "Resource": [
-                {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition"
-                      },
-                      ":s3:::",
-                      {
-                        "Ref": "ServerlessDeploymentBucket"
-                      },
-                      "/*"
-                    ]
-                  ]
-                }
-              ],
-              "Condition": {
-                "Bool": {
-                  "aws:SecureTransport": false
-                }
-              }
-            }
-          ]
-        }
-      }
-    },
     "ContactFormLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
         "LogGroupName": "/aws/lambda/website-dev-contactForm"
-      }
-    },
-    "IamRoleLambdaExecution": {
-      "Type": "AWS::IAM::Role",
-      "Properties": {
-        "AssumeRolePolicyDocument": {
-          "Version": "2012-10-17",
-          "Statement": [
-            {
-              "Effect": "Allow",
-              "Principal": {
-                "Service": [
-                  "lambda.amazonaws.com"
-                ]
-              },
-              "Action": [
-                "sts:AssumeRole"
-              ]
-            }
-          ]
-        },
-        "Policies": [
-          {
-            "PolicyName": {
-              "Fn::Join": [
-                "-",
-                [
-                  "website-dev",
-                  "lambda"
-                ]
-              ]
-            },
-            "PolicyDocument": {
-              "Version": "2012-10-17",
-              "Statement": [
-                {
-                  "Effect": "Allow",
-                  "Action": [
-                    "logs:CreateLogStream",
-                    "logs:CreateLogGroup"
-                  ],
-                  "Resource": [
-                    {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/website-dev*:*"
-                    }
-                  ]
-                },
-                {
-                  "Effect": "Allow",
-                  "Action": [
-                    "logs:PutLogEvents"
-                  ],
-                  "Resource": [
-                    {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/website-dev*:*:*"
-                    }
-                  ]
-                }
-              ]
-            }
-          }
-        ],
-        "Path": "/",
-        "RoleName": {
-          "Fn::Join": [
-            "-",
-            [
-              "website-dev",
-              {
-                "Ref": "AWS::Region"
-              },
-              "lambdaRole"
-            ]
-          ]
-        }
       }
     },
     "EnterpriseLogAccessIamRole": {
@@ -187,17 +58,15 @@
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Ref": "ServerlessDeploymentBucket"
-          },
-          "S3Key": "serverless/website/dev/1588196955749-2020-04-29T21:49:15.749Z/website.zip"
+          "S3Bucket": "com.extraartinary.us-east-1.deploys",
+          "S3Key": "serverless/website/dev/1588200993977-2020-04-29T22:56:33.977Z/website.zip"
         },
         "FunctionName": "website-dev-contactForm",
-        "Handler": "backend/contactForm.handler",
+        "Handler": "s_contactForm.handler",
         "MemorySize": 1024,
         "Role": {
           "Fn::GetAtt": [
-            "IamRoleLambdaExecution",
+            "SESExecutionRole",
             "Arn"
           ]
         },
@@ -206,17 +75,17 @@
       },
       "DependsOn": [
         "ContactFormLogGroup",
-        "IamRoleLambdaExecution"
+        "SESExecutionRole"
       ]
     },
-    "ContactFormLambdaVersionHbMNZuPCvtfNeKIgTjkEOiGkIQClAj1AJwMv2aUmKcw": {
+    "ContactFormLambdaVersion40ym4QhuU1EvDK6JCAg13t7kJUvf7smlOf5sjET67M": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "ContactFormLambdaFunction"
         },
-        "CodeSha256": "Bw+IAnTtNa+kEQoTfjID7xuiuot438CkMBiTPdc05yA="
+        "CodeSha256": "JzTuhFMEUMhpsxITvjQeOULA9BvQAI623Ib2BP2H1L0="
       }
     },
     "ApiGatewayRestApi": {
@@ -346,7 +215,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1588196951139": {
+    "ApiGatewayDeployment1588200989344": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -502,10 +371,8 @@
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Ref": "ServerlessDeploymentBucket"
-          },
-          "S3Key": "serverless/website/dev/1588196955749-2020-04-29T21:49:15.749Z/custom-resources.zip"
+          "S3Bucket": "com.extraartinary.us-east-1.deploys",
+          "S3Key": "serverless/website/dev/1588200993977-2020-04-29T22:56:33.977Z/custom-resources.zip"
         },
         "FunctionName": "website-dev-custom-resource-apigw-cw-role",
         "Handler": "apiGatewayCloudWatchRole/handler.handler",
@@ -522,6 +389,71 @@
       "DependsOn": [
         "IamRoleCustomResourcesLambdaExecution"
       ]
+    },
+    "SESExecutionRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "RoleName": "SESExecutionRole",
+        "AssumeRolePolicyDocument": {
+          "Version": "2020-04-29",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              },
+              "Action": [
+                "ses:SendEmail"
+              ]
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": "defaultExecutionRole",
+            "PolicyDocument": {
+              "Version": "2020-04-29",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogGroup",
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::Join": [
+                        ":",
+                        [
+                          "arn:aws:logs",
+                          {
+                            "Ref": "AWS::Region"
+                          },
+                          {
+                            "Ref": "AWS::AccountId"
+                          },
+                          "log-group:/aws/lambda/*:*:*"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "ec2:CreateNetworkInterface",
+                    "ec2:DescribeNetworkInterfaces",
+                    "ec2:DetachNetworkInterface",
+                    "ec2:DeleteNetworkInterface"
+                  ],
+                  "Resource": "*"
+                }
+              ]
+            }
+          }
+        ]
+      }
     },
     "CloudWatchLogsSubscriptionFilterContactFormLogGroup": {
       "Type": "AWS::Logs::SubscriptionFilter",
@@ -546,9 +478,7 @@
   },
   "Outputs": {
     "ServerlessDeploymentBucketName": {
-      "Value": {
-        "Ref": "ServerlessDeploymentBucket"
-      }
+      "Value": "com.extraartinary.us-east-1.deploys"
     },
     "EnterpriseLogAccessIamRole": {
       "Value": {
@@ -561,7 +491,7 @@
     "ContactFormLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "ContactFormLambdaVersionHbMNZuPCvtfNeKIgTjkEOiGkIQClAj1AJwMv2aUmKcw"
+        "Ref": "ContactFormLambdaVersion40ym4QhuU1EvDK6JCAg13t7kJUvf7smlOf5sjET67M"
       }
     },
     "ServiceEndpoint": {
