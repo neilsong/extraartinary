@@ -77,7 +77,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "com.extraartinary.us-east-1.deploys",
-                "S3Key": "serverless/website/dev/1588218470157-2020-04-30T03:47:50.157Z/website.zip"
+                "S3Key": "serverless/website/dev/1588219490892-2020-04-30T04:04:50.892Z/website.zip"
               },
               "FunctionName": "website-dev-contactForm",
               "Handler": "s_contactForm.handler",
@@ -96,14 +96,14 @@
               "SESExecutionRole"
             ]
           },
-          "ContactFormLambdaVersionGPWAI9D31xE5UxrHuh8m2WgUwBjn2XcDea6MzDokyo": {
+          "ContactFormLambdaVersionPq0Krcar3I5ZSngvhQQtq6R4VoTSrSwVmAcaj4Y4R08": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ContactFormLambdaFunction"
               },
-              "CodeSha256": "iOmocDopNetGQ1nq5dm6wHq+Z9cxUIJQm+G0WrxMHzk="
+              "CodeSha256": "LhPxEIhsyWxUTxiDiET0sNmjR9ybiMfXuBd7MBlHiWw="
             }
           },
           "ApiGatewayRestApi": {
@@ -233,7 +233,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1588218464961": {
+          "ApiGatewayDeployment1588219485916": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -390,7 +390,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "com.extraartinary.us-east-1.deploys",
-                "S3Key": "serverless/website/dev/1588218470157-2020-04-30T03:47:50.157Z/custom-resources.zip"
+                "S3Key": "serverless/website/dev/1588219490892-2020-04-30T04:04:50.892Z/custom-resources.zip"
               },
               "FunctionName": "website-dev-custom-resource-apigw-cw-role",
               "Handler": "apiGatewayCloudWatchRole/handler.handler",
@@ -516,7 +516,7 @@
           "ContactFormLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ContactFormLambdaVersionGPWAI9D31xE5UxrHuh8m2WgUwBjn2XcDea6MzDokyo"
+              "Ref": "ContactFormLambdaVersionPq0Krcar3I5ZSngvhQQtq6R4VoTSrSwVmAcaj4Y4R08"
             }
           },
           "ServiceEndpoint": {
@@ -600,7 +600,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "ContactFormLambdaVersionGPWAI9D31xE5UxrHuh8m2WgUwBjn2XcDea6MzDokyo"
+        "versionLogicalId": "ContactFormLambdaVersionPq0Krcar3I5ZSngvhQQtq6R4VoTSrSwVmAcaj4Y4R08"
       }
     },
     "resources": {
@@ -691,7 +691,7 @@
     "artifact": "/Users/neilsong/Development/extraartinary/.serverless/website.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/website/dev/1588218470157-2020-04-30T03:47:50.157Z",
+    "artifactDirectoryName": "serverless/website/dev/1588219490892-2020-04-30T04:04:50.892Z",
     "artifact": "website.zip"
   }
 }

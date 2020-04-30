@@ -1,12 +1,13 @@
 const AWS = require('aws-sdk');
 const SES = new AWS.SES();
+var RECIEVER = 'song.neil.song@gmail.com';
 
 function validOrigin(testOrigin) {
   const VALID_ORIGINS = ['http://extraartinary.com'];
   return VALID_ORIGINS.filter(origin => origin === testOrigin)[0] || VALID_ORIGINS[0];
 }
 
-const RECIEVER = "song.neil.song@gmail.com"
+
 
 function sendEmail(formData, callback) {
   const emailParams = {
