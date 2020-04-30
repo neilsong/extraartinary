@@ -1,41 +1,54 @@
-var AWS = require('aws-sdk');
-var ses = new AWS.SES();
+const AWS = require('aws-sdk');
+const SES = new AWS.SES();
 
-var SENDER = 'song.neil.song@gmail.com';
+function validOrigin(testOrigin) {
+  const VALID_ORIGINS = ['http://extraartinary.com'];
+  return VALID_ORIGINS.filter(origin => origin === testOrigin)[0] || VALID_ORIGINS[0];
+}
+
+const RECIEVER = "song.neil.song@gmail.com"
 
 function sendEmail(formData, callback) {
-    const emailParams = {
-      Source: SENDER,
-      ReplyToAddresses: [SENDER],
-      Destination: {
-        ToAddresses: [formData.Email], // SES RECEIVING EMAIL
-      },
-      Message: {
-        Body: {
-          Text: {
-            Charset: 'UTF-8',
-            Data: 'firstname: ' + formData.FName + ' lastname: ' + formData.LName + '\nphone: ' + formData.PNumber + '\nemail: ' + formData.Email + '\ndesc: ' + formData.Message,
-          },
-        },
-        Subject: {
+  const emailParams = {
+    Source: RECIEVER,
+    ReplyToAddresses: [Email9388859756],
+    Destination: {
+      ToAddresses: [RECIEVER],
+    },
+    Message: {
+      Body: {
+        Text: {
           Charset: 'UTF-8',
-          Data: 'Website Referral Form: ' + formData.Fname + ' ' + formData.LName,
+          Data: `Name: ${formData.FName0110788470} ${formData.LName6278564309}\nPhone Number: ${formData.PNumber0350902328}\nEmail: ${formData.Email9388859756}\n\n${formData.Message4032341236}`,
         },
       },
-    };
-  
-    SES.sendEmail(emailParams, callback);
-  }
+      Subject: {
+        Charset: 'UTF-8',
+        Data: formData.subject,
+      },
+    },
+  };
 
-exports.handler = function (event, context, callback) {
-    const formData = event.body;
+  SES.sendEmail(emailParams, callback);
+}
 
-    sendEmail(formData, function(err, data) {
+module.exports.submitForm = (event, context, callback) => {
+  const origin = event.headers.Origin || event.headers.origin;
+  const formData = JSON.parse(event.body);
+
+  // Return with no response if honeypot is present
+  if (formData.name)return;
+  if (formData.email)return;
+
+  // Return with no response if the origin isn't white-listed
+  if (!validOrigin(origin)) return;
+
+  sendEmail(formData, function(err, data) {
     const response = {
       statusCode: err ? 500 : 200,
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'http://extraartinary.com',
+        'Access-Control-Allow-Origin': origin,
       },
       body: JSON.stringify({
         message: err ? err.message : data,

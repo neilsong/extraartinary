@@ -19,41 +19,56 @@
   <meta name="google" content="notranslate">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script type="text/javascript">
-        $(document).ready(function() {
-            $("#submit").click(function(e) {
-                e.preventDefault();
-                
-                var FName = $("#FName").val(),
-                    LName = $("#LName").val(),
-                    Email = $("#Email").val(),
-                    PNumber = $("#PNumber").val(),
-                    Message = $("#Message").val();
-                    var event = {
-                        "FName": FName,
-                      	"LName": LName,
-                        "Email": Email,
-                      	"PNumber": PNumber,
-                        "Message": Message
-                    };
-                $.ajax({
-                    type: "POST",
-                    url: 'https://3h6bna1os6.execute-api.us-east-1.amazonaws.com/dev/post/contactform',
-                    contentType: "application/json; charset=utf-8",
-                    crossDomain: "true",
-                    dataType: "json",
-                    data: JSON.stringify(event),
-                    success: function(){
-                      	$("#error-message").hide();
-                      	$("#wf-form-Contact-Form").hide();
-                        $("#success-message").show();
-                    },
-                    error: function(){
-                        $("#error-message").show();
-                    }
-                });
-            })
-        });
+        const form = document.querySelector('wf-form-Contact-Form');
+
+        form.onsubmit = e => {
+          e.preventDefault();
+          if (!!form.children.namedItem('name').value) return;
+          if (!!form.children.namedItem('email').value) return;
+
+          // Prepare data to send
+          const data = {};
+          const formElements = Array.from(form);
+          formElements.map(input => (data[input.name] = input.value));
+
+          // Log what our lambda function will receive
+          console.log(JSON.stringify(data));
+
+          // Construct an HTTP request
+          var xhr = new XMLHttpRequest();
+          xhr.open(form.method, form.action, true);
+          xhr.setRequestHeader('Accept', 'application/json; charset=utf-8');
+          xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+
+          // Send the collected data as JSON
+          xhr.send(JSON.stringify(data));
+
+          // Callback function
+          xhr.onloadend = response => {
+            if (response.target.status === 200) {
+              // The form submission was successful
+              $("#error-message").hide();
+              $("#wf-form-Contact-Form").hide();
+              $("#success-message").show();
+            }
+            else {
+              // The form submission failed
+              $("#error-message").show();
+            }
+          };
+        };
     </script>
+<style>
+  .ohnohoney{
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 0;
+      width: 0;
+      z-index: -1;
+  }
+</style>
 </head>
 <body class="body">
   <div class="navbar-section">
@@ -100,13 +115,21 @@
       <h2 class="heading-1 contact">Contact us</h2>
       <h1 class="heading-2 contact-h2">Have a question?</h1>
       <div class="w-form">
-        <form id="wf-form-Contact-Form" name="wf-form-Contact-Form" data-name="Contact Form" method = "POST">
+        <form id="wf-form-Contact-Form" name="wf-form-Contact-Form" method = "POST" action="https://3h6bna1os6.execute-api.us-east-1.amazonaws.com/dev/post/contactform">
           <div class="contact-form-grid">
-            <div id="w-node-0d2878f21594-e7c5eaa0"><label for="First-Name" id="contact-first-name">First name *</label><input type="text" class="text-field w-input" maxlength="256" name="FName" data-name="FName" id="FName" required=""></div>
-            <div id="w-node-0d2878f21598-e7c5eaa0"><label for="Last-Name" id="contact-last-name">Last name *</label><input type="text" class="text-field w-input" maxlength="256" name="LName" data-name="LName" id="LName" required=""></div>
-            <div id="w-node-0d2878f2159c-e7c5eaa0"><label for="Email" id="contact-email">Email *</label><input type="email" class="text-field w-input" maxlength="256" name="Email" data-name="Email" id="Email" required=""></div>
-            <div id="w-node-0d2878f215a0-e7c5eaa0"><label for="Contact-Phone-Number" id="contact-phone">Phone number</label><input type="tel" class="text-field w-input" maxlength="256" name="PNumber" data-name="PNumber" id="PNumber"></div>
-            <div id="w-node-0d2878f215a4-e7c5eaa0"><label for="Message" id="contact-message">Message</label><textarea data-name="Message" maxlength="5000" id="Message" name="Message" class="text-field w-input"></textarea></div>
+            <!-- Constants -->
+            <input type="hidden" name="subject" value="New Contact Request" />
+            <!-- Real -->
+            <div id="w-node-0d2878f21594-e7c5eaa0"><label for="FName0110788470">First name *</label><input type="text" class="text-field w-input" maxlength="256" name="FName0110788470" id="FName0110788470" required=""></div>
+            <div id="w-node-0d2878f21598-e7c5eaa0"><label for="LName6278564309">Last name *</label><input type="text" class="text-field w-input" maxlength="256" name="LName6278564309" id="LName6278564309" required=""></div>
+            <div id="w-node-0d2878f2159c-e7c5eaa0"><label for="Email9388859756">Email *</label><input type="email" class="text-field w-input" maxlength="256" name="Email9388859756" id="Email9388859756" required=""></div>
+            <div id="w-node-0d2878f215a0-e7c5eaa0"><label for="PNumber0350902328">Phone number</label><input type="tel" class="text-field w-input" maxlength="256" name="PNumber0350902328" id="PNumber0350902328"></div>
+            <div id="w-node-0d2878f215a4-e7c5eaa0"><label for="Message4032341236">Message</label><textarea maxlength="5000" id="Message4032341236" name="Message4032341236" class="text-field w-input"></textarea></div>
+            <!-- H o n e y p o t -->
+            <label class="ohnohoney" for="name"></label>
+            <input class="ohnohoney" autocomplete="off" type="text" id="name" name="name" placeholder="Your name here">
+            <label class="ohnohoney" for="email"></label>
+            <input class="ohnohoney" autocomplete="off" type="email" id="email" name="email" placeholder="Your e-mail here">
           </div><button id = "submit" type="submit" data-wait="Please wait..." class="standard-button w-button">Submit</button></form>
         <div class="success-message w-form-done" id="success-message"><img src="images/kissclipart-verified-icon-green-clipart-computer-icons-check-m-85318937cadd758b.jpg" width="150" alt="" class="image-3">
           <div>Thank you! Your submission has been received!</div>
