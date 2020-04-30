@@ -77,7 +77,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "com.extraartinary.us-east-1.deploys",
-                "S3Key": "serverless/website/dev/1588202233034-2020-04-29T23:17:13.034Z/website.zip"
+                "S3Key": "serverless/website/dev/1588206122563-2020-04-30T00:22:02.563Z/website.zip"
               },
               "FunctionName": "website-dev-contactForm",
               "Handler": "s_contactForm.handler",
@@ -96,14 +96,14 @@
               "SESExecutionRole"
             ]
           },
-          "ContactFormLambdaVersionMlPFrcb1s4cl15jibwEDL8lReZ032TlK2K32Udkw8I": {
+          "ContactFormLambdaVersion70OyPA2RwJZhYvaf1kHPw2cY4HiqdJ90ysnXmgqDA": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ContactFormLambdaFunction"
               },
-              "CodeSha256": "G0lZX4sVIZFz4PPBiva+MB+ZgKZbmX3Hfg/Pd4gsSo4="
+              "CodeSha256": "LMjv8k2SWlwBhIC5WakEHdI/PzUsXEe9rCblC9YQCwM="
             }
           },
           "ApiGatewayRestApi": {
@@ -172,12 +172,12 @@
                   {
                     "StatusCode": "200",
                     "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Origin": "'http://extraartinary.com'",
                       "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
                       "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
                     },
                     "ResponseTemplates": {
-                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".+\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
+                      "application/json": ""
                     }
                   }
                 ]
@@ -233,7 +233,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1588202228630": {
+          "ApiGatewayDeployment1588206117945": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -390,7 +390,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "com.extraartinary.us-east-1.deploys",
-                "S3Key": "serverless/website/dev/1588202233034-2020-04-29T23:17:13.034Z/custom-resources.zip"
+                "S3Key": "serverless/website/dev/1588206122563-2020-04-30T00:22:02.563Z/custom-resources.zip"
               },
               "FunctionName": "website-dev-custom-resource-apigw-cw-role",
               "Handler": "apiGatewayCloudWatchRole/handler.handler",
@@ -516,7 +516,7 @@
           "ContactFormLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ContactFormLambdaVersionMlPFrcb1s4cl15jibwEDL8lReZ032TlK2K32Udkw8I"
+              "Ref": "ContactFormLambdaVersion70OyPA2RwJZhYvaf1kHPw2cY4HiqdJ90ysnXmgqDA"
             }
           },
           "ServiceEndpoint": {
@@ -575,14 +575,7 @@
               "path": "post/contactform",
               "method": "post",
               "cors": {
-                "origins": [
-                  "*"
-                ],
-                "origin": "*",
-                "methods": [
-                  "OPTIONS",
-                  "POST"
-                ],
+                "origin": "http://extraartinary.com",
                 "headers": [
                   "Content-Type",
                   "X-Amz-Date",
@@ -591,7 +584,11 @@
                   "X-Amz-Security-Token",
                   "X-Amz-User-Agent"
                 ],
-                "allowCredentials": false
+                "allowCredentials": false,
+                "methods": [
+                  "OPTIONS",
+                  "POST"
+                ]
               },
               "integration": "AWS_PROXY"
             }
@@ -603,7 +600,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "ContactFormLambdaVersionMlPFrcb1s4cl15jibwEDL8lReZ032TlK2K32Udkw8I"
+        "versionLogicalId": "ContactFormLambdaVersion70OyPA2RwJZhYvaf1kHPw2cY4HiqdJ90ysnXmgqDA"
       }
     },
     "resources": {
@@ -694,7 +691,7 @@
     "artifact": "/Users/neilsong/Development/extraartinary/.serverless/website.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/website/dev/1588202233034-2020-04-29T23:17:13.034Z",
+    "artifactDirectoryName": "serverless/website/dev/1588206122563-2020-04-30T00:22:02.563Z",
     "artifact": "website.zip"
   }
 }

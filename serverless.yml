@@ -16,7 +16,16 @@ functions:
       - http:
           path: post/contactform
           method: post
-          cors: true
+          cors: 
+            origin: 'http://extraartinary.com' 
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: false
 
 resources:
   Resources:

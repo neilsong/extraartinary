@@ -3,40 +3,45 @@ var ses = new AWS.SES();
 
 var SENDER = 'song.neil.song@gmail.com';
 
+function sendEmail(formData, callback) {
+    const emailParams = {
+      Source: SENDER,
+      ReplyToAddresses: [SENDER],
+      Destination: {
+        ToAddresses: [formData.Email], // SES RECEIVING EMAIL
+      },
+      Message: {
+        Body: {
+          Text: {
+            Charset: 'UTF-8',
+            Data: 'firstname: ' + formData.FName + ' lastname: ' + formData.LName + '\nphone: ' + formData.PNumber + '\nemail: ' + formData.Email + '\ndesc: ' + formData.Message,
+          },
+        },
+        Subject: {
+          Charset: 'UTF-8',
+          Data: 'Website Referral Form: ' + formData.Fname + ' ' + formData.LName,
+        },
+      },
+    };
+  
+    SES.sendEmail(emailParams, callback);
+  }
 
 exports.handler = function (event, context, callback) {
-    console.log('Received event:', event);
-    sendEmail(event, function (err, data) {
-        var response = {
-        "isBase64Encoded": false,
-        "headers": { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'extraartinary.com'},
-         "statusCode": 200,
-        "body": "{\"result\": \"Success.\"}"
-         };
+    const formData = event.body;
 
-        return response
-    });
-   
-};
- 
-function sendEmail (event, done) {
-    var params = {
-        Destination: {
-            ToAddresses: [event.Email]
-        },
-        Message: {
-            Body: {
-                Text: {
-                    Data: 'firstname: ' + event.FName + ' lastname: ' + event.LName + '\nphone: ' + event.PNumber + '\nemail: ' + event.Email + '\ndesc: ' + event.Message,
-                    Charset: 'UTF-8'
-                }
-            },
-            Subject: {
-                Data: 'Website Referral Form: ' + event.Fname + ' ' + event.LName,
-                Charset: 'UTF-8'
-            }
-        },
-        Source: SENDER
+    sendEmail(formData, function(err, data) {
+    const response = {
+      statusCode: err ? 500 : 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'http://extraartinary.com',
+      },
+      body: JSON.stringify({
+        message: err ? err.message : data,
+      }),
     };
-    ses.sendEmail(params, done);
-}
+
+    callback(null, response);
+  });
+};

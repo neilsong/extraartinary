@@ -37,11 +37,11 @@
                     };
                 $.ajax({
                     type: "POST",
-                    url: 'https://r2orbe854c.execute-api.us-east-1.amazonaws.com/Live/',
+                    url: 'https://3h6bna1os6.execute-api.us-east-1.amazonaws.com/dev/post/contactform',
                     contentType: "application/json; charset=utf-8",
                     crossDomain: "true",
                     dataType: "json",
-                    data: event,
+                    data: JSON.stringify(event),
                     success: function(){
                       	$("#error-message").hide();
                       	$("#wf-form-Contact-Form").hide();
