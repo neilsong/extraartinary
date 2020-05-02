@@ -1,61 +1,63 @@
-const AWS = require('aws-sdk');
-const SES = new AWS.SES();
-var RECIEVER = 'song.neil.song@gmail.com';
+const aws = require('aws-sdk')
+const ses = new aws.SES()
+const myEmail = 'song.neil.song@gmail.com'
+const myDomain = 'http://extraartinary.com'
 
-function validOrigin(testOrigin) {
-  const VALID_ORIGINS = ['http://extraartinary.com'];
-  return VALID_ORIGINS.filter(origin => origin === testOrigin)[0] || VALID_ORIGINS[0];
+function generateResponse (code, payload) {
+  return {
+    statusCode: code,
+    headers: {
+      'Access-Control-Allow-Origin': myDomain,
+      'Access-Control-Allow-Headers': 'x-requested-with',
+    },
+    body: JSON.stringify(payload)
+  }
 }
 
-
-
-function sendEmail(formData, callback) {
-  const emailParams = {
-    Source: RECIEVER,
-    ReplyToAddresses: [Email9388859756],
-    Destination: {
-      ToAddresses: [RECIEVER],
+function generateError (code, err) {
+  console.log(err)
+  return {
+    statusCode: code,
+    headers: {
+      'Access-Control-Allow-Origin': myDomain,
+      'Access-Control-Allow-Headers': 'x-requested-with',
     },
+    body: JSON.stringify(err.message)
+  }
+}
+
+function generateEmailParams (body) {
+  const { fname, lname, email, pnumber, message} = JSON.parse(body)
+  console.log(fname, lname, email, pnumber, message)
+  if (!(email && fname && lname && message)) {
+    throw new Error('Missing parameters! Make sure to add parameters \'email\', \'name\', \'message\'.')
+  }
+
+  return {
+    Source: myEmail,
+    Destination: { ToAddresses: [myEmail] },
+    ReplyToAddresses: [email],
     Message: {
       Body: {
         Text: {
           Charset: 'UTF-8',
-          Data: `Name: ${formData.FName0110788470} ${formData.LName6278564309}\nPhone Number: ${formData.PNumber0350902328}\nEmail: ${formData.Email9388859756}\n\n${formData.Message4032341236}`,
-        },
+          Data: `Message sent from email ${email} by ${fname} ${lname}.\nPhone Number: ${pnumber}\nMessage: ${message}`
+        }
       },
       Subject: {
         Charset: 'UTF-8',
-        Data: formData.subject,
-      },
-    },
-  };
-
-  SES.sendEmail(emailParams, callback);
+        Data: `New Contact Request`
+      }
+    }
+  }
 }
 
-module.exports.submitForm = (event, context, callback) => {
-  const origin = event.headers.Origin || event.headers.origin;
-  const formData = JSON.parse(event.body);
-
-  // Return with no response if honeypot is present
-  if (formData.name)return;
-  if (formData.email)return;
-
-  // Return with no response if the origin isn't white-listed
-  if (!validOrigin(origin)) return;
-
-  sendEmail(formData, function(err, data) {
-    const response = {
-      statusCode: err ? 500 : 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': origin,
-      },
-      body: JSON.stringify({
-        message: err ? err.message : data,
-      }),
-    };
-
-    callback(null, response);
-  });
-};
+module.exports.send = async (event) => {
+  try {
+    const emailParams = generateEmailParams(event.body)
+    const data = await ses.sendEmail(emailParams).promise()
+    return generateResponse(200, data)
+  } catch (err) {
+    return generateError(500, err)
+  }
+}

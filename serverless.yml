@@ -11,7 +11,7 @@ provider:
 functions:
   contactForm:
     role: SESExecutionRole
-    handler: backend/contactForm.handler
+    handler: backend/contactForm.send
     events:
       - http:
           path: post/contactform
