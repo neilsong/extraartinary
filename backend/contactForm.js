@@ -1,7 +1,8 @@
 const aws = require('aws-sdk')
 const ses = new aws.SES()
 const myEmail = 'song.neil.song@gmail.com'
-const myDomain = 'http://extraartinary.com'
+const myDomain = 'http://0.0.0.0:8000'
+//add 'http://extraartinary.com' to domain when shifting to production
 
 function generateResponse (code, payload) {
   return {
@@ -27,7 +28,7 @@ function generateError (code, err) {
 }
 
 function generateEmailParams (body) {
-  const { fname, lname, email, pnumber, message} = JSON.parse(body)
+  const { fname, lname, email, pnumber, message} = JSON.parse(body);
   console.log(fname, lname, email, pnumber, message)
   if (!(email && fname && lname && message)) {
     throw new Error('Missing parameters! Make sure to add parameters \'email\', \'name\', \'message\'.')

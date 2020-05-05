@@ -17,7 +17,8 @@ functions:
           path: post/contactform
           method: post
           cors: 
-            origin: 'http://extraartinary.com' 
+            origin: 'http://0.0.0.0:8000' 
+            #add 'http://extraartinary.com' to domain when shifting to production
             headers:
               - Content-Type
               - X-Amz-Date
