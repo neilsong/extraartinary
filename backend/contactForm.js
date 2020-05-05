@@ -1,7 +1,7 @@
 const aws = require('aws-sdk')
 const ses = new aws.SES()
 const myEmail = 'song.neil.song@gmail.com'
-const myDomain = 'http://0.0.0.0:8000'
+const myDomain = 'http://extraartinary.com'
 //add 'http://extraartinary.com' to domain when shifting to production
 
 function generateResponse (code, payload) {

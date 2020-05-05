@@ -59,7 +59,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "com.extraartinary.us-east-1.deploys",
-          "S3Key": "serverless/website/dev/1588464829958-2020-05-03T00:13:49.958Z/website.zip"
+          "S3Key": "serverless/website/dev/1588654312181-2020-05-05T04:51:52.181Z/website.zip"
         },
         "FunctionName": "website-dev-contactForm",
         "Handler": "s_contactForm.handler",
@@ -78,14 +78,14 @@
         "SESExecutionRole"
       ]
     },
-    "ContactFormLambdaVersionAIAcSKkIcryR6M0Eh1YjAY8RvbdSNwj8BrVUDWjJ0rc": {
+    "ContactFormLambdaVersionOFy8X4t5jOibPk2Ze7JuXOANeCRcpFEoxDQx5c8": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "ContactFormLambdaFunction"
         },
-        "CodeSha256": "Jn3uV+ejJ7mcTz/et717MPyBphkWm0NmBLgUU5vDeaE="
+        "CodeSha256": "lHdVwMvcImJOQblg+qaI1U4ib4XTazXrCX2TzhfKutI="
       }
     },
     "ApiGatewayRestApi": {
@@ -154,7 +154,7 @@
             {
               "StatusCode": "200",
               "ResponseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'http://0.0.0.0:8000'",
+                "method.response.header.Access-Control-Allow-Origin": "'http://extraartinary.com'",
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
                 "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
               },
@@ -215,7 +215,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1588464824989": {
+    "ApiGatewayDeployment1588654307133": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -372,7 +372,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "com.extraartinary.us-east-1.deploys",
-          "S3Key": "serverless/website/dev/1588464829958-2020-05-03T00:13:49.958Z/custom-resources.zip"
+          "S3Key": "serverless/website/dev/1588654312181-2020-05-05T04:51:52.181Z/custom-resources.zip"
         },
         "FunctionName": "website-dev-custom-resource-apigw-cw-role",
         "Handler": "apiGatewayCloudWatchRole/handler.handler",
@@ -498,7 +498,7 @@
     "ContactFormLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "ContactFormLambdaVersionAIAcSKkIcryR6M0Eh1YjAY8RvbdSNwj8BrVUDWjJ0rc"
+        "Ref": "ContactFormLambdaVersionOFy8X4t5jOibPk2Ze7JuXOANeCRcpFEoxDQx5c8"
       }
     },
     "ServiceEndpoint": {
