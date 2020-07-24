@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--  This site was created in Webflow. http://www.webflow.com  -->
-<!--  Last Published: Thu Jul 23 2020 00:00:08 GMT+0000 (Coordinated Universal Time)  -->
+<!--  Last Published: Fri Jul 24 2020 00:40:05 GMT+0000 (Coordinated Universal Time)  -->
 <html data-wf-page="5e84b5600813bd49e7c5eaa0" data-wf-site="5e84b5600813bd96d9c5ea9f">
 <head>
   <meta charset="utf-8">
@@ -20,12 +20,12 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script type="text/javascript">
           window.onload=function(){
-              var cform = document.getElementById('wf-form-Contact-Form');
-              const url = 'https://3h6bna1os6.execute-api.us-east-1.amazonaws.com/dev/post/contactform';
-              var submit = document.getElementById("submit");
-              var successmssg = document.getElementById("success-message");
-              var errormssg = document.getElementById("error-message");
-              var submitbtn = document.getElementById("submit");
+              var cform = document.getElementById('wf-form-Contact-Form')
+              const url = 'https://3h6bna1os6.execute-api.us-east-1.amazonaws.com/dev/post/contactform'
+              var submit = document.getElementById("submit")
+              var successmssg = document.getElementById("success-message")
+              var errormssg = document.getElementById("error-message")
+              var submitbtn = document.getElementById("submit")
               function post(url, body, callback) {
                 var req = new XMLHttpRequest();
                 req.open("POST", url, true);
@@ -40,18 +40,18 @@
                 req.send(JSON.stringify(body));
               }
               function success () {
-                errormssg.style.display = "none";
-                cform.style.display = "none";
-                successmssg.style.display = "block";
+                errormssg.style.display = "none"
+                cform.style.display = "none"
+                successmssg.style.display = "block"
               }
               function error (err) {
-                errormssg.style.display = "block";
-                submit.disabled = false;
-                console.log(error);
+                errormssg.style.display = "block"
+                submit.disabled = false
+                console.log(error)
               }
               submitbtn.addEventListener("click", function (e) {
                e.preventDefault()
-                submit.disabled = true;
+                submit.disabled = true
                 const payload = {
                   fname: cform.FName0110788470.value,
                   lname: cform.LName6278564309.value,
@@ -60,8 +60,8 @@
                   message: cform.Message4032341236.value
                 }
                 post(url, payload, function (err, res) {
-                  if (err) { return error(err); }
-                  success();
+                  if (err) { return error(err) }
+                  success()
                 })
                })
              }
@@ -130,18 +130,17 @@
             <div id="w-node-0d2878f21598-e7c5eaa0"><label for="LName6278564309">Last name *</label><input type="text" class="text-field w-input" maxlength="256" name="LName6278564309" id="LName6278564309" required=""></div>
             <div id="w-node-0d2878f2159c-e7c5eaa0"><label for="Email9388859756">Email *</label><input type="text" class="text-field w-input" maxlength="256" name="Email9388859756" id="Email9388859756" required=""></div>
             <div id="w-node-0d2878f215a0-e7c5eaa0"><label for="PNumber0350902328">Phone number</label><input type="text" class="text-field w-input" maxlength="256" name="PNumber0350902328" id="PNumber0350902328"></div>
-            <div id="w-node-0d2878f215a4-e7c5eaa0"><label for="Message4032341236">Message *</label><textarea maxlength="5000" id="Message4032341236" name="Message4032341236" class="text-field w-input"></textarea></div>
+            <div id="w-node-0d2878f215a4-e7c5eaa0"><label for="Message4032341236">Message</label><textarea maxlength="5000" id="Message4032341236" name="Message4032341236" class="text-field w-input"></textarea></div>
             <!-- H o n e y p o t -->
             <label class="ohnohoney" for="name"></label>
             <input class="ohnohoney" autocomplete="off" type="text" id="name" name="name" placeholder="Your name here">
             <label class="ohnohoney" for="email"></label>
             <input class="ohnohoney" autocomplete="off" type="email" id="email" name="email" placeholder="Your e-mail here">
-          </div><input id="submit" type="button" value="Submit" data-wait="Please wait..." class="standard-button w-button"></form>
-        <div class="success-message w-form-done" id = "success-message">
-          <img src="images/kissclipart-verified-icon-green-clipart-computer-icons-check-m-85318937cadd758b.jpg" width="150" alt="" class="image-3">
+          </div><input id = "submit" type="submit" value="Submit" data-wait="Please wait..." class="standard-button w-button"></form>
+        <div class="success-message w-form-done" id="success-message"><img src="images/kissclipart-verified-icon-green-clipart-computer-icons-check-m-85318937cadd758b.jpg" width="150" srcset="images/kissclipart-verified-icon-green-clipart-computer-icons-check-m-85318937cadd758b.jpg 500w, images/kissclipart-verified-icon-green-clipart-computer-icons-check-m-85318937cadd758b.jpg 800w, images/kissclipart-verified-icon-green-clipart-computer-icons-check-m-85318937cadd758b.jpg 900w" sizes="150px" alt="" class="image-3">
           <div>Thank you! Your submission has been received!</div>
         </div>
-        <div class="w-form-fail" id = "error-message">
+        <div class="w-form-fail" id="error-message">
           <div>Oops! Something went wrong while submitting the form.</div>
         </div>
       </div>

@@ -859,11 +859,17 @@ a {
 
 @media screen and (min-width: 1920px) {
   .heading-1.contact {
+    overflow: visible;
+    min-width: auto;
     margin-top: 27px;
     margin-bottom: 8px;
+    text-align: center;
   }
   .heading-1.contact.classes-heading {
     color: #000;
+  }
+  .heading-2.contact-h2 {
+    min-width: auto;
   }
   .container-3 {
     overflow: visible;
@@ -922,6 +928,9 @@ a {
     background-image: url('../images/Slide-3.jpg');
     background-position: 0px 0px;
     background-size: cover;
+  }
+  .image-3 {
+    max-width: none;
   }
   .slider-2 {
     min-height: 80vh;
