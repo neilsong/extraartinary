@@ -1,6 +1,6 @@
 version = 1
 
-exclude_patterns = ["/frontend/Login_v11/*"]
+exclude_patterns = ["frontend/Login_v11/*"]
 
 [[analyzers]]
 name = "javascript"
